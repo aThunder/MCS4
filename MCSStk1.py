@@ -24,8 +24,8 @@ class getStockData():
         self.cursor.row_factory = sqlite3.Row
         self.diskEngine = create_engine('sqlite:///allCotEtf.db')
 
-        self.recentList =[]
         self.origList = []
+
         self.newList = []
 
     def querySQL(self):
@@ -39,19 +39,20 @@ class getStockData():
                                     "WHERE DATE > '2016-02-10' ")
 
     def originalList(self):
+        self.originalListx = []
         for row in self.fromSQLcursor:
             # print(row)
             # print(dict(row))
             # print(row['Symbol'],row['close'])
             self.origList.append(dict(row))
 
-        self.origListStatic = self.origList
-        # return self.origListStatic
-
-        print(len(self.origListStatic))
+        for row in self.origList:
+            self.originalListx.append(dict(row))
 
         # for row in self.fromSQLconn:
         #     print(row)
+        # print('Listx: ',self.originalListx)
+        # return self.originalListx
 
     def drawDay(self):
         pick = random.choice(self.origList)
@@ -60,7 +61,6 @@ class getStockData():
     def randomOrder(self):
 
         for draw in range(len(self.origList)):
-            # print("ListLength: ",len(self.origList))
             pick = self.drawDay()
             self.newList.append(pick)
             # print("Pick:",pick['date'])
@@ -71,14 +71,13 @@ class getStockData():
                 if each == pick:
                     # print("Bingo",counter)
                     del self.origList[counter]
-                    # print(self.origList)
                     break
                 else:
                     counter += 1
 
         print("OriginalFullList:")
-        print(len(self.origListStatic))
-        for item in self.origListStatic:
+        print(len(self.originalListx))
+        for item in self.originalListx:
             print(item['date'],item['close'])
 
         print("RandomOrderList:")
@@ -86,14 +85,13 @@ class getStockData():
         for item in self.newList:
             print(item['date'],item['close'])
 
-        # self.newList.append(pick)
-        # for line in self.newList:
-        #     print(line['date'])
-
     def tempTest(self):
-        x = 5
+        x = [5,10,15,20]
         y = x
-        x = 10
+        print()
+        print("del from list test")
+        print(y)
+        del x[2]
         print(x,y)
 
 def main():
