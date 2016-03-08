@@ -32,7 +32,8 @@ class getStockData():
 
         self.fromSQLcursor = self.cursor.execute("SELECT SYMBOL,DATE,CLOSE "
                                    "FROM SymbolsDataDaily "
-                                    "WHERE DATE > '2016-02-10' ")
+                                    "WHERE DATE > '2016-02-10'"
+                                    " AND SYMBOL = '{0}' ".format(self.symbol))
 
         self.fromSQLconn = self.conn.execute("SELECT * "
                                    "FROM SymbolsDataDaily "
@@ -75,12 +76,14 @@ class getStockData():
                 else:
                     counter += 1
 
-        print("OriginalFullList:")
+        print()
+        print("OriginalFullList: {0}".format(self.symbol.upper()))
         print(len(self.originalListx))
         for item in self.originalListx:
             print(item['date'],item['close'])
 
-        print("RandomOrderList:")
+        print()
+        print("RandomOrderList: {0}".format(self.symbol.upper()))
         print(len(self.newList))
         for item in self.newList:
             print(item['date'],item['close'])
@@ -95,7 +98,8 @@ class getStockData():
         print(x,y)
 
 def main():
-    symbol = 'AAPL'
+    symbol = input("Enter Symbol to be randomized: ")
+    # symbol = 'AAPL'
     IDKey = 99
     a = getStockData(symbol,99)
     a.querySQL()
