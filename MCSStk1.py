@@ -55,6 +55,18 @@ class getStockData():
         # print('Listx: ',self.originalListx)
         # return self.originalListx
 
+    def testAvailabilty(self):
+        if self.origList == []:
+            print("Symbol not in SQL...try again")
+            print()
+            check = False
+        else:
+            print("Here we go")
+
+            print()
+            check = True
+        return check
+
     def drawDay(self):
         pick = random.choice(self.origList)
         return pick
@@ -104,8 +116,13 @@ def main():
     a = getStockData(symbol,99)
     a.querySQL()
     a.originalList()
-    a.randomOrder()
+    b = a.testAvailabilty()
+    # print(b)
+    if b == True:
+        a.randomOrder()
+    else:
+        main()
 
-    a.tempTest()
+    # a.tempTest()
 
 if __name__ == '__main__':main()
